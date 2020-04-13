@@ -4,3 +4,21 @@ Cache-Control: no-cache
 
 ###
 
+POST http://localhost:8080/people
+Content-Type: application/json
+
+{ "firstName": "fn", "lastName": "ln", "email": "fn@ln.fr" }
+
+###
+
+GET http://localhost:8080/people/{id}
+Content-Type: application/json
+
+###
+GET http://localhost:8080/people/search?q=dierk
+Content-Type: application/json
+
+###
+DELETE http://localhost:8080/people/3
+
+###
