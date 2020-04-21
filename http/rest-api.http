@@ -10,11 +10,6 @@ Content-Type: application/json
 { "firstName": "fn", "lastName": "ln", "email": "fn@ln.fr" }
 
 ###
-
-GET http://localhost:8080/people/{id}
-Content-Type: application/json
-
-###
 GET http://localhost:8080/rooms/search?q=32
 Content-Type: application/json
 
