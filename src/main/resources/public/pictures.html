@@ -13,23 +13,32 @@
         function nextPhoto() {
             if (undefined === photoInfos) {
                 // TODO: We do NOT have any photo yet.
+                findInterestingImages();
                 return;
             }
             const photo = photoInfos[photoNumber++];
             if (photoNumber > 10) {
                 // TODO: We do NOT have any photo to display anymore (page is over). We have to fetch the next page.
+                pageNumber = pageNumber + 1;
+                photoNumber = 0;
+                findInterestingImages();
                 return;
             }
             // Possible values for '_<format>.jpg' are '[mstzb]' (t:tiny,s:small,m:medium,b:big,...).
             // TODO: Construct 'pictureUrl'
-            const pictureUrl = undefined;
+            //const pictureUrl = undefined;
+            const pictureUrl = "http://static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + "_b.jpg";
             document.getElementById("target").innerHTML = "<img src='" + pictureUrl + "'><div> " + photo.title + "</div>";
         }
 
         function findInterestingImages() {
-            const url = "https://www.flickr.com/services/rest/?method=flickr.interestingness.getList&per_page=10&page="
+            const url = "https://www.flickr.com/services/rest/?method=flickr.interestingness.getList&per_page=10&page=" //on stocke à chaque fois 10 photos
                 + pageNumber + "&format=json&nojsoncallback=1&api_key=d5d6d15bb498e649b134170184968b61";
             // TODO: Fetch the photos from URL and store them to photoInfos.
+            fetch(url).then(response => response.json()).then(json => {
+                photoInfos = json.photos.photo;
+                nextPhoto();
+            }).catch(error => console.log("ERROR " + error));
         }
     </script>
 </head>
